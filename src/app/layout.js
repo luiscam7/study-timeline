@@ -5,8 +5,8 @@ export const metadata = {
   description: 'Your day-by-day agenda to learn Rust and build AI agents with Rig + local LLMs',
   manifest: '/manifest.json',
   icons: {
-    icon: '/icons/rust-icon.svg',
-    apple: '/icons/rust-icon.svg',
+    icon: '/icons/icon-192.png',
+    apple: '/icons/icon-192.png',
   },
   appleWebApp: {
     capable: true,
@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <link rel="apple-touch-icon" href="/icons/rust-icon.svg" />
+        <link rel="apple-touch-icon" href="/icons/icon-192.png" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="mobile-web-app-capable" content="yes" />
