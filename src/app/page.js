@@ -155,8 +155,6 @@ export default function Home() {
   const today = new Date();
   const dateStr = `${DAYS[today.getDay()]}, ${MONTHS[today.getMonth()]} ${today.getDate()}`;
 
-  const currentWeek = 0;
-
   // Load from localStorage
   useEffect(() => {
     try {
@@ -200,7 +198,8 @@ export default function Home() {
 
       <div className="timeline">
         {WEEKS.map((w) => {
-          const status = w.n < currentWeek ? 'completed' : w.n === currentWeek ? 'current' : 'upcoming';
+          const allDone = w.days.every((_, i) => done[`${w.n}-${i}`]);
+          const status = allDone ? 'completed' : 'upcoming';
           return (
             <div
               key={w.n}
@@ -208,7 +207,7 @@ export default function Home() {
               onClick={() => toggle(w.n)}
             >
               <div className="week-dot">
-                <span className="week-num">{w.n}</span>
+                <span className="week-num">{allDone ? '✓' : w.n}</span>
               </div>
 
               <div className="week-header-row">
@@ -220,9 +219,8 @@ export default function Home() {
                   </div>
                 </div>
                 <span className={`week-badge ${status}`}>
-                  {status === 'completed' && '✓ '}
-                  {status === 'current' && '⚡ '}
-                  {status}
+                  {allDone && '✓ '}
+                  {allDone ? 'done' : 'upcoming'}
                 </span>
               </div>
 
