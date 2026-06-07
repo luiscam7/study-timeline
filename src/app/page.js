@@ -151,18 +151,41 @@ const DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 export default function Home() {
   const [expanded, setExpanded] = useState(4);
   const [dark, setDark] = useState(false);
+  const [done, setDone] = useState({});
   const today = new Date();
   const dateStr = `${DAYS[today.getDay()]}, ${MONTHS[today.getMonth()]} ${today.getDate()}`;
 
-  // Determine current week based on start date or manual
-  // Use Week 4 as current (active) — Rig setup
   const currentWeek = 4;
 
+  // Load from localStorage
+  useEffect(() => {
+    try {
+      const savedDone = localStorage.getItem('st-done');
+      if (savedDone) setDone(JSON.parse(savedDone));
+      const savedDark = localStorage.getItem('st-dark');
+      if (savedDark !== null) setDark(savedDark === 'true');
+    } catch (_) {}
+  }, []);
+
+  // Persist
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    localStorage.setItem('st-dark', dark);
   }, [dark]);
 
+  useEffect(() => {
+    localStorage.setItem('st-done', JSON.stringify(done));
+  }, [done]);
+
   const toggle = (n) => setExpanded(expanded === n ? null : n);
+
+  const toggleDay = (weekNum, dayIdx, e) => {
+    e.stopPropagation();
+    setDone((prev) => ({
+      ...prev,
+      [`${weekNum}-${dayIdx}`]: !prev[`${weekNum}-${dayIdx}`],
+    }));
+  };
 
   return (
     <div className="container">
@@ -218,12 +241,31 @@ export default function Home() {
               {expanded === w.n && (
                 <div className="expanded">
                   <div className="day-list">
-                    {w.days.map((d, i) => (
-                      <div key={i} className="day-item">
-                        <span className="day-label">Day {i + 1}</span>
-                        <span className="day-text">{d}</span>
-                      </div>
-                    ))}
+                    {w.days.map((d, i) => {
+                      const isDone = done[`${w.n}-${i}`];
+                      return (
+                        <div
+                          key={i}
+                          className="day-item"
+                          onClick={(e) => toggleDay(w.n, i, e)}
+                          style={{
+                            opacity: isDone ? 0.45 : 1,
+                            cursor: 'pointer',
+                            userSelect: 'none',
+                          }}
+                        >
+                          <span className="day-label">Day {i + 1}</span>
+                          <span
+                            className="day-text"
+                            style={{
+                              textDecoration: isDone ? 'line-through' : 'none',
+                            }}
+                          >
+                            {isDone ? '✓ ' : ''}{d}
+                          </span>
+                        </div>
+                      );
+                    })}
                   </div>
                   {w.resources && (
                     <div className="resources">{w.resources}</div>
