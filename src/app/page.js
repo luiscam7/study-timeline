@@ -189,20 +189,8 @@ export default function Home() {
 
   return (
     <div className="container">
-      <div className="header" style={{ position: 'relative' }}>
-        <button
-          onClick={() => setDark(!dark)}
-          style={{
-            position: 'absolute', top: 12, right: 16, border: 'none',
-            background: 'var(--bg)', boxShadow: 'var(--shadow-outset)',
-            borderRadius: 'var(--radius-sm)', padding: '6px 12px',
-            cursor: 'pointer', fontSize: '0.85rem',
-            color: 'var(--text-secondary)', transition: 'var(--transition)',
-            fontFamily: 'inherit',
-          }}
-          onMouseEnter={(e) => e.target.style.boxShadow = 'var(--shadow-card)'}
-          onMouseLeave={(e) => e.target.style.boxShadow = 'var(--shadow-outset)'}
-        >
+      <div className="header">
+        <button className="theme-toggle" onClick={() => setDark(!dark)}>
           {dark ? '☀️' : '🌙'}
         </button>
         <h1>🗓️ Study Timeline</h1>
