@@ -1,0 +1,19 @@
+{
+  "name": "Study Timeline",
+  "short_name": "Study Timeline",
+  "description": "Your day-by-day agenda to learn Rust and build AI agents with Rig + local LLMs",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#e4ebf5",
+  "theme_color": "#6c63ff",
+  "orientation": "portrait-primary",
+  "categories": ["education", "productivity"],
+  "icons": [
+    {
+      "src": "/icons/rust-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
