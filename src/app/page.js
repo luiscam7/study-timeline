@@ -155,7 +155,7 @@ export default function Home() {
   const today = new Date();
   const dateStr = `${DAYS[today.getDay()]}, ${MONTHS[today.getMonth()]} ${today.getDate()}`;
 
-  const currentWeek = 4;
+  const currentWeek = 0;
 
   // Load from localStorage
   useEffect(() => {
